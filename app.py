@@ -46,6 +46,7 @@ class TinderBot:
 
         sleep(2)
         self.startLoop = True
+        self.mainLoop()
 
 
     def handle_like(self):
@@ -59,8 +60,7 @@ class TinderBot:
                     self.driver.find_element_by_xpath('//*[@id="q-1604738990"]/div/div/div[2]/button[2]').click()
                 elif self.driver.find_element_by_xpath('//h3[text()="Acabaram suas curtidas!"]') is not None:
                     self.startLoop = False
-                    print("Fechando o código!")
-                    self.driver.close()
+                    
             except:
                 pass
         '''finally:
@@ -74,11 +74,15 @@ class TinderBot:
             finally:
                 sleep(2)
                 like.click()'''
+        
+    def mainLoop(self):
+        while self.startLoop:
+            self.handle_like()
+        print("Fechando o código!")
+        self.driver.close()
 
 
 
 if __name__ == "__main__":
     bot = TinderBot()
     bot.login_tinder()
-    while bot.startLoop:
-        bot.handle_like()
